@@ -16,3 +16,43 @@
 -->
 
 # slack
+
+This dockerization of slack is unusable as is.
+
+If you use at as
+
+```
+docker \
+    run \
+    --interactive \
+    --tty \
+    --rm \
+    --env DISPLAY \
+    --volume /tmp/.X11-unix:/tmp/.X11-unix:ro \
+    tidyrailroad/slack:0.0.0
+```
+
+then it will open up a window where nothing seems to work.
+
+However if you do
+
+```
+docker \
+    run \
+    --interactive \
+    --tty \
+    --rm \
+    --env DISPLAY \
+    --volume /tmp/.X11-unix:/tmp/.X11-unix:ro \
+    --entrypoint bash \
+    tidyrailroad/slack:0.0.0
+    
+            dnf update --assumeyes &&
+            dnf groupinstall --assumeyes "Fedora Workstation" &&
+            slack
+```
+
+then it seems to work OK (not thoroughly tested).
+
+This suggests to me that some of the packages the the "Fedora Workstation" group are needed, but I don't know which specific ones.
+It seems wasteful to install the entire group to make the app work.
